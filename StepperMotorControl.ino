@@ -9,7 +9,7 @@
 #include <BlynkSimpleEsp32.h>
 #include "Rotation.h"
 
-char auth[] = "r_wA37kDmIAM-io7jLl_UZWyFWUVA1JS";
+char auth[] = "";
 
 char ssid[32] = "username";
 char pass[32] = "password";
