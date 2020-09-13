@@ -1,13 +1,11 @@
 #define BLYNK_PRINT Serial
 
-#define STEP_HIGH        REG_WRITE(GPIO_OUT_W1TS_REG, BIT0);
-#define STEP_LOW         REG_WRITE(GPIO_OUT_W1TC_REG, BIT0);
-
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <Blynk.h>
 #include <BlynkSimpleEsp32.h>
 #include "Rotation.h"
+//#include "BlynkFuncs.h"
 
 char auth[] = "";
 
@@ -41,8 +39,13 @@ void loop() {
       backandforth();
     }
   }
-
 }
+
+
+
+
+//----------------------------Below are Blynk Functions-----------------------------------
+
 
 BLYNK_WRITE(V0)//enable rotation
 {
@@ -61,20 +64,20 @@ BLYNK_WRITE(V1) {//rotateAccel
     rotateAccel = val * 1000 * pow(0.7071, (log(microstep) / log(2)));
 }
 BLYNK_WRITE(V2) {//rotateAngle 
-    int val = param.asInt(); // assigning incoming value from pin V1 to a variable
+    int val = param.asInt(); // assigning incoming value from pin V2 to a variable
     rotateAngle = R_STEPS_PER_REV / 360.0 * val;
 }
 BLYNK_WRITE(V7) {//rotateSpd
-    int val = param.asInt(); // assigning incoming value from pin V1 to a variable
+    int val = param.asInt(); // assigning incoming value from pin V7 to a variable
     rotateSpd = val * 1000 / microstep;
 }
-BLYNK_WRITE(V3) {
+BLYNK_WRITE(V3) {//set 16th step
   setR_sixteenthstep();
 }
 
 
-int tempspd;
-int tempangle;
+static int tempspd;
+static int tempangle;
 BLYNK_WRITE(V4) {
   if (rotateEnable) {
     int pinValue = param.asInt();
@@ -91,15 +94,16 @@ BLYNK_WRITE(V4) {
     }
   }
 }
+
 BLYNK_WRITE(V8) {//randdelay
-    int val = param.asInt(); // assigning incoming value from pin V1 to a variable
+    int val = param.asInt();
     randdelay = val * 1000;
 }
 
-
-BLYNK_WRITE(V5) {//vibration
+BLYNK_WRITE(V5) {//set full step
   setR_fullstep();
 }
+
 BLYNK_WRITE(V6) {//R_Continuous
   if (rotateEnable) {
     int pinValue = param.asInt();
