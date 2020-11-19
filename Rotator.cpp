@@ -1,6 +1,15 @@
 #include "Rotator.h"
 
 
+Rotator::Rotator() {
+  Motor();
+  rotateCont = 0;
+  rotateRand = 0;
+  randdelay = 5;
+}
+
+Rotator::~Rotator() {}
+
 void Rotator::rotate_continuous_stop() {
   rotateCont = 0;
   while (n > 0);

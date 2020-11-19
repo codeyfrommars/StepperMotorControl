@@ -1,6 +1,34 @@
 #include "Motor.h"
 
-Motor::Motor() {}
+Motor::Motor() {
+  rotateAccel = 100000;
+  rotatedirPin = 2;
+  rotatestepPin = 0;
+  RMS3 = 27;
+  RMS2 = 14;
+  RMS1 = 12;
+  REN = 13;
+  
+  rotateEnable = 0;
+  R_STEPS_PER_REV = 200;
+  rotateDelay = 1000;
+  rotateAngle = R_STEPS_PER_REV / 360.0 * 60;
+  microstep = 1;
+  
+  rotatetimer = NULL;
+  rotatetimerMux = portMUX_INITIALIZER_UNLOCKED;
+  rotateconttimer = NULL;
+  rotateconttimerMux = portMUX_INITIALIZER_UNLOCKED;
+  d = 100000;
+  dir = 0; //direction
+  rotateSpd = 10000;
+  n = 0;
+  stepCount = 0;
+  rampUpStepCount = 0;
+  totalSteps = 0;
+  stepPosition = 0;
+  movementDone = false;
+}
 
 Motor::~Motor() {}
 
